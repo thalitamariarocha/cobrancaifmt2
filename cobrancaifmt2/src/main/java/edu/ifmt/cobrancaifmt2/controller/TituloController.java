@@ -53,12 +53,19 @@ public class TituloController {
 		}
 		titulosRepository.save(titulo);
 		mv.addObject("mensagem", "Título salvo com sucesso!");
-		return "redirect:/titulo/novo";
+		return "redirect:/titulo";
 	}
 	@RequestMapping("{codigo}")
 	public ModelAndView edicao(@PathVariable("codigo") Titulo titulo) {
 		ModelAndView mv = new ModelAndView("CadastroTitulos");
 		mv.addObject(titulo);
 		return mv;
+	}
+
+	@RequestMapping(value="{codigo}", method = RequestMethod.DELETE)
+	public String excluir(@PathVariable Long codigo, RedirectAttributes attributes) {
+		titulosRepository.deleteById(codigo);
+		attributes.addFlashAttribute("mensagem", "Título excluído com sucesso!");
+		return "redirect:/titulo";
 	}
 }

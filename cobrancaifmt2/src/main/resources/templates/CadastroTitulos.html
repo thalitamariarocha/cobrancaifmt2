@@ -10,10 +10,12 @@
 </head>
 <body>
 	<section layout:fragment="conteudo">
+
 		<form action="/titulo" method="POST" th:object="${titulo}">
 			<div class="col-sm-6" style="margin: 50px 70px">
 
 				<div th:replace="Mensagem"></div>
+				<div th:replace="MensagemErro"></div>
 
 	
 				<div class="card">
