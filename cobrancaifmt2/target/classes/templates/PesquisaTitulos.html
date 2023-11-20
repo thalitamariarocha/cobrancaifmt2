@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html 
+	xmlns="https://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{LayoutPadrao}"
+>
+<head>
+	<title>Pesquisa</title>
+	<style>
+		.badge-danger {
+			background-color: #dc3545;
+		}
+		.badge-success {
+			background-color: #28a745;
+		}
+	</style>
+
+</head>
+<body>
+
+<section layout:fragment="conteudo">
+			<div class="card">
+				<h5 class="card-header">lista</h5>
+				<div class="card-body">
+					<table class="table table-bordered table-striped">
+						<thead>
+						<th scope="col" class="text-center">#</th>
+						<th scope="col">Descrição</th>
+						<th scope="col" class="text-left">Data de vencimento</th>
+						<th scope="col" class="text-right">Valor</th>
+						<th scope="col" class="text-center">Status</th>
+						<th scope="col"></th>
+						</thead>
+						<tbody>
+						<tr scope="row" th:each="titulo : ${titulos}">
+							<td class="text-center" th:text="${titulo.codigo}"></td>
+							<td th:text="${titulo.descricao}"></td>
+							<td class="text-center" th:text="${#temporals.format(titulo.dataVencimento.toLocalDate(), 'dd/MM/yyyy')}"></td>
+
+
+<!--							<td class="text-center" th:text="${#temporals.format(#temporals.create(titulo.dataVencimento, 'yyyy-MM-dd'), 'dd/MM/yyyy')}"></td>-->
+
+							<td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td>
+							<td class="text-center">
+								<span class="badge" th:text="${titulo.status.descricao}" th:classappend="${titulo.pendente} ? 'badge-danger' : 'badge-success'"></span>
+							</td>
+							<td class="text-center">
+								<a th:href="@{/titulo/{codigo}(codigo=${titulo.codigo})}">
+									<i class="material-icons">edit</i>
+								</a>
+								<button type="button" data-toggle="modal" data-target="#confirmacaoExclusaoModal" class="btn btn-link" title="Excluir">
+									<i class="material-icons">delete</i>
+								</button>
+							</td>
+						<tr>
+							<td colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum Registrado Encontrado</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<div layout:insert="DialogoConfirmacaoExclusao"></div>
+			</div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html 
+	xmlns="https://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{LayoutPadrao}"
+>
+<head>
+	<title>Cadastro</title>
+</head>
+<body>
+	<section layout:fragment="conteudo">
+		<form action="/titulo" method="POST" th:object="${titulo}">
+			<div class="col-sm-6" style="margin: 50px 70px">
+
+				<div th:replace="Mensagem"></div>
+
+	
+				<div class="card">
+					<h5 class="card-header">Novo Titulo</h5>
+					<div class="card-body">
+						<input type="text" style="display: none;" name="codigo" th:field="*{codigo}"
+						>
+						<div class="row mb-3">
+							<label for="descricao" class="col-sm-2 col-form-label">Descrição</label>
+							<div class="col-sm-7">
+								<input type="text" class="form-control" id="descricao"
+								th:classappend="${#fields.hasErrors('descricao')} ? is-invalid" placeholder="Descrição"
+									   th:field="*{descricao}">
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label for="dataVencimento"  class="col-sm-2 col-form-label">Data de Venc.</label>
+							<div class="col-sm-7">
+								<input type="date" class="form-control" id="dataVencimento"
+
+									   placeholder="Data de Vencimento"
+									   th:field="*{dataVencimento}"
+									   th:classappend="${#fields.hasErrors('dataVencimento')} ? is-invalid">
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label for="valor" class="col-sm-2 col-form-label">Valor</label>
+							<div class="col-sm-7">
+								<input type="text" class="form-control" id="valor" placeholder="R$ 0,00"
+								th:classappend="${#fields.hasErrors('valor')} ? is-invalid" th:field="*{valor}" />
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label for="status" class="col-sm-2 col-form-label">Status</label>
+							<div class="col-sm-7">
+								<select class="form-control" id="status" th:field="*{status}">
+									<option th:each="status : ${todosStatusTitulo}" th:value="${status}"
+										th:text="${status.descricao}"> </option>
+								</select>
+							</div>
+						</div>
+	
+						<div class="row mb-3">
+							<div class="col-sm-2 offset-sm-2">
+								<button type="submit" class="btn btn-primary">Salvar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</section>
+</body>
+</html>
